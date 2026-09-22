@@ -11,6 +11,3 @@ lyrics/
 /worker_script.js
 .DS_Store
 target/
-dist/
-dist-ssr/
-pkg/
