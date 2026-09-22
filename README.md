@@ -35,7 +35,7 @@
 
 ## 歌词组件截图展示
 
-![AMLL 歌词组件展示图，歌曲： Jake Miller, HOYO-MiX - WHITE NIGHT (不眠之夜) ，TTML 歌词贡献者： @Xionghaizi001](https://github.com/Steve-xmh/applemusic-like-lyrics/assets/39523898/776939ff-24af-4bd0-aba6-262e903ab816)
+![AMLL 歌词组件展示图，歌曲： Jake Miller, HOYO-MiX - WHITE NIGHT (不眠之夜) ，TTML 歌词贡献者： @Xionghaizi001](https://github.com/amll-dev/applemusic-like-lyrics/assets/39523898/776939ff-24af-4bd0-aba6-262e903ab816)
 
 <div align=center>
 歌曲： Jake Miller, HOYO-MiX - WHITE NIGHT (不眠之夜)
@@ -43,7 +43,7 @@
 TTML 歌词贡献者： @Xionghaizi001
 </div>
 
-![AMLL 歌词组件展示图，歌曲： Maroon 5 - Sugar ，TTML 歌词贡献者： @Y-CIAO](https://github.com/Steve-xmh/applemusic-like-lyrics/assets/39523898/02ecc483-565e-45d3-8ff7-06f65cfd4c0d)
+![AMLL 歌词组件展示图，歌曲： Maroon 5 - Sugar ，TTML 歌词贡献者： @Y-CIAO](https://github.com/amll-dev/applemusic-like-lyrics/assets/39523898/02ecc483-565e-45d3-8ff7-06f65cfd4c0d)
 
 <div align=center>
 歌曲： Maroon 5 - Sugar
@@ -51,7 +51,7 @@ TTML 歌词贡献者： @Xionghaizi001
 TTML 歌词贡献者： @Y-CIAO
 </div>
 
-![AMLL 歌词组件展示图，歌曲： Taylor Swift, Brendon Urie - ME! ，TTML 歌词贡献者： @Xionghaizi001](https://github.com/Steve-xmh/applemusic-like-lyrics/assets/39523898/b19bf9b4-352b-4459-9293-439836cea231)
+![AMLL 歌词组件展示图，歌曲： Taylor Swift, Brendon Urie - ME! ，TTML 歌词贡献者： @Xionghaizi001](https://github.com/amll-dev/applemusic-like-lyrics/assets/39523898/b19bf9b4-352b-4459-9293-439836cea231)
 
 <div align=center>
 歌曲： Taylor Swift, Brendon Urie - ME!
