@@ -81,7 +81,7 @@ export interface AmllLyricResult {
 	/**
 	 * 历史兼容属性，等同于 `lines`
 	 */
-	lyricLines?: AmllLyricLine[];
+	lyricLines: AmllLyricLine[];
 	/**
 	 * 一个元数据表，以 `[键, 值数组]` 的形式存储
 	 */

@@ -242,7 +242,9 @@ export class MusicStatusGetterDev extends MusicContextBase {
 	override forwardSong(): void {}
 	override rewindSong(): void {}
 	override setVolume(value: number): void {}
-	override getVolume(): number {}
+	override getVolume(): number {
+		return 1;
+	}
 	override pause(): void {}
 	override resume(): void {}
 	override dispose() {

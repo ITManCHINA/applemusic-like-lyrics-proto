@@ -5,6 +5,7 @@
     ],
     "exclude": [
         "./node_modules/@types/node/**/*.ts",
+        "./src/components/song-info/index.tsx"
     ],
     "compilerOptions": {
         "target": "ESNext",
@@ -16,7 +17,8 @@
         ],
         "module": "ESNext",
         "jsx": "react-jsx",
-        "types": [],
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
         "strict": true,
         "moduleResolution": "bundler",
         "resolveJsonModule": true,
@@ -24,13 +26,17 @@
         "allowSyntheticDefaultImports": true,
         "allowJs": false,
         "skipLibCheck": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "../../node_modules/@types"
+        ],
         "paths": {
           "@applemusic-like-lyrics/core/*": ["../core/src/*"],
-          "@applemusic-like-lyrics/react/*": ["../react/src/*"],
+          "@applemusic-like-lyrics/react/*": ["../react/dist/*"],
           "@applemusic-like-lyrics/bncm/*": ["../bncm/src/*"],
           "@applemusic-like-lyrics/ttml/*": ["../ttml/src/*"],
           "@applemusic-like-lyrics/core": ["../core/src"],
-          "@applemusic-like-lyrics/react": ["../react/src"],
+          "@applemusic-like-lyrics/react": ["../react/dist/index.d.ts"],
           "@applemusic-like-lyrics/bncm": ["../bncm/src"],
           "@applemusic-like-lyrics/ttml": ["../ttml/src"],
         }

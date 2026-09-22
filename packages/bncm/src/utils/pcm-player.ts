@@ -91,7 +91,7 @@ export class PCMPlayer {
 	}
 
 	getByteFrequencyData(data: Uint8Array) {
-		this.analyzerNode.getByteFrequencyData(data);
+		this.analyzerNode.getByteFrequencyData(data as any);
 		return data;
 	}
 

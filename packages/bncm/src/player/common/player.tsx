@@ -119,7 +119,7 @@ export const CoreLyricPlayer: FC<{
 				hidePassedLines={lyricHidePassed}
 				lyricLines={lyricLines.state === "hasData" ? lyricLines.data : []}
 				ref={playerRef}
-				onLyricLineClick={(line) => {
+				onLyricLineClick={(line: any) => {
 					line.preventDefault();
 					line.stopPropagation();
 					line.stopImmediatePropagation();
@@ -127,7 +127,7 @@ export const CoreLyricPlayer: FC<{
 					playerRef.current?.lyricPlayer?.resetScroll();
 					playerRef.current?.lyricPlayer?.calcLayout();
 				}}
-				onLyricLineContextMenu={(line) => {
+				onLyricLineContextMenu={(line: any) => {
 					line.preventDefault();
 					line.stopPropagation();
 					line.stopImmediatePropagation();

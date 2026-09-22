@@ -572,8 +572,13 @@ export class TTMLParser {
 		songPart?: string | null,
 		blockIndex?: number,
 	) {
-		const id = this.getAttr(p, NS.ITUNES, Attributes.Key);
-		if (!id) return;
+		let id = this.getAttr(p, NS.ITUNES, Attributes.Key);
+		if (!id) {
+			id =
+				this.getAttr(p, NS.XML, Attributes.Id) ||
+				p.getAttribute("id") ||
+				`line_${lines.length + 1}`;
+		}
 
 		const baseContent = this.parseCommonContent(p);
 

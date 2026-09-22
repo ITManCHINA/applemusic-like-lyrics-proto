@@ -859,7 +859,7 @@ export abstract class LyricPlayerBase
 	 * @internal 仅供内部和绑定包使用
 	 * @param reason 触发排版布局更新的原因场景
 	 */
-	calcLayout(reason: LayoutReason): void {
+	calcLayout(reason: LayoutReason = LayoutReason.ConfigChange): void {
 		const strategy = LayoutReasonStrategyMap[reason];
 
 		const snapshot = this.timelineController.getSnapshot();

@@ -320,9 +320,14 @@ export class LrcParser {
 		tokens: Token[],
 		lastMainLines: LyricLine[],
 	): void {
-		const lastTimeToken = tokens.findLast(
-			(token): token is TimeToken => token.type === "time",
-		);
+		let lastTimeToken: TimeToken | undefined;
+		for (let i = tokens.length - 1; i >= 0; i--) {
+			const token = tokens[i];
+			if (token.type === "time") {
+				lastTimeToken = token as TimeToken;
+				break;
+			}
+		}
 		const lastLine = lastMainLines[lastMainLines.length - 1];
 		if (!lastTimeToken || !lastLine) return;
 

@@ -20,8 +20,8 @@ import {
  * @returns 成功解析出来的歌词
  */
 export function parseQrc(qrc: string): LyricLine[] {
-	const wordPattern = /(.*?)\((\d+),(\d+)\)/g;
-	const linePattern = /^\[(\d+),(\d+)\]/;
+	const wordPattern = /(.*?)\((\d+)\s*,\s*(\d+)\)/g;
+	const linePattern = /^\[(\d+)\s*,\s*(\d+)\]/;
 
 	const lines = qrc
 		.split(/\r?\n/)

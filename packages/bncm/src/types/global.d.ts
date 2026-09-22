@@ -1,6 +1,9 @@
 /// <reference types="./betterncm" />
 /// <reference types="vite-plugin-svgr/client" />
 
+declare module "react-slider";
+declare module "stats.js";
+
 declare module "*.css" {
 	const cssStyle: string;
 	export default cssStyle;

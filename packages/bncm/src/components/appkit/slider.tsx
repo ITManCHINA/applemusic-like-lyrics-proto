@@ -1,7 +1,7 @@
 import ReactSlider from "react-slider";
 import type { ReactSliderProps } from "react-slider";
 
-export const Slider: React.FC<ReactSliderProps> = (props) => {
+export const Slider: React.FC<any> = (props) => {
 	const { className, ...others } = props;
 	return (
 		<ReactSlider className={`appkit-slider ${className || ""}`} {...others} />

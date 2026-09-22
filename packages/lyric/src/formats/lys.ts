@@ -53,7 +53,7 @@ export function parseLys(lys: string): LyricLine[] {
 		.filter((l) => l.length > 0);
 	const lyricLines: LyricLine[] = [];
 	const propRegex = /^\[(\d+)\]/;
-	const wordRegex = /(.*?)\((\d+),(\d+)\)/g;
+	const wordRegex = /(.*?)\((\d+)\s*,\s*(\d+)\)/g;
 
 	for (const lineStr of lines) {
 		const propMatch = lineStr.match(propRegex);

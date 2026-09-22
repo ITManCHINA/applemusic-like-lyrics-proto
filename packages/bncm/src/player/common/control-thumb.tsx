@@ -10,7 +10,7 @@ export const ControlThumb: FC = () => {
 		marginLeft: -25,
 		marginTop: -4,
 	});
-	const onMouseMove = (e) => {
+	const onMouseMove = (e: any) => {
 		const container = containerRef.current;
 		if (container && hoveringRef.current) {
 			const rect = container.getBoundingClientRect();

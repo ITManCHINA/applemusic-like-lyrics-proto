@@ -63,7 +63,7 @@ async function getLyric(
 ): Promise<EAPILyricResponse> {
 	const v = await fetch(
 		`${
-			window?.APP_CONF?.domain ?? "https://music.163.com"
+			(window as any)?.APP_CONF?.domain ?? "https://music.163.com"
 		}/api/song/lyric/v1?tv=0&lv=0&rv=0&kv=0&yv=0&ytv=0&yrv=0&cp=false&id=${songId}`,
 		{
 			signal,
@@ -397,76 +397,128 @@ export const lyricLinesAtom = atom(
 	(get): Loadable<CoreLyricLine[]> => {
 		const result = get(rawLyricLinesAtom);
 		const overrideData = get(loadableMusicOverrideDataAtom);
-		if (result.state === "hasData" && overrideData.state === "hasData") {
-			let overrideLines = result.data;
+		const allowTranslatedLine = get(showTranslatedLineAtom);
+		const allowRomanLine = get(showRomanLineAtom);
 
-			function checkTranslatedAndRomanLyric(
-				lyricOverrideTranslatedLyricData?: string,
-				lyricOverrideRomanLyricData?: string,
+		if (overrideData.state === "hasData") {
+			const data = overrideData.data;
+			const isLocalOverride =
+				data.lyricOverrideType !== LyricOverrideType.None &&
+				data.lyricOverrideType !== LyricOverrideType.MusicId;
+
+			if (isLocalOverride) {
+				let overrideLines: CoreLyricLine[] = [];
+
+				function checkTranslatedAndRomanLyric(
+					lyricOverrideTranslatedLyricData?: string,
+					lyricOverrideRomanLyricData?: string,
+				) {
+					if (lyricOverrideTranslatedLyricData) {
+						const translated = parseLrc(lyricOverrideTranslatedLyricData);
+						for (const line of translated) {
+							pairLyric(line, overrideLines, "translatedLyric");
+						}
+					}
+					if (lyricOverrideRomanLyricData) {
+						const translated = parseLrc(lyricOverrideRomanLyricData);
+						for (const line of translated) {
+							pairLyric(line, overrideLines, "romanLyric");
+						}
+					}
+				}
+
+				switch (data.lyricOverrideType) {
+					case LyricOverrideType.PureMusic:
+						overrideLines = [];
+						break;
+					case LyricOverrideType.LocalLRC:
+						if (data.lyricOverrideOriginalLyricData) {
+							overrideLines = parseLrc(
+								data.lyricOverrideOriginalLyricData,
+							).map(transformLyricLine);
+							checkTranslatedAndRomanLyric(
+								data.lyricOverrideTranslatedLyricData,
+								data.lyricOverrideRomanLyricData,
+							);
+						}
+						break;
+					case LyricOverrideType.LocalYRC:
+						if (data.lyricOverrideOriginalLyricData) {
+							overrideLines = parseYrc(
+								data.lyricOverrideOriginalLyricData,
+							).map(transformLyricLine);
+							checkTranslatedAndRomanLyric(
+								data.lyricOverrideTranslatedLyricData,
+								data.lyricOverrideRomanLyricData,
+							);
+						}
+						break;
+					case LyricOverrideType.LocalQRC:
+						if (data.lyricOverrideOriginalLyricData) {
+							overrideLines = parseQrc(
+								data.lyricOverrideOriginalLyricData,
+							).map(transformLyricLine);
+							checkTranslatedAndRomanLyric(
+								data.lyricOverrideTranslatedLyricData,
+								data.lyricOverrideRomanLyricData,
+							);
+						}
+						break;
+					case LyricOverrideType.LocalTTML:
+						if (data.lyricOverrideOriginalLyricData) {
+							// TODO: 提供歌词元数据
+							overrideLines = parseTTML(
+								data.lyricOverrideOriginalLyricData,
+							).lyricLines;
+						}
+						break;
+					default:
+				}
+
+				if (!allowTranslatedLine) {
+					overrideLines.forEach((line) => {
+						line.translatedLyric = "";
+					});
+				}
+				if (!allowRomanLine) {
+					overrideLines.forEach((line) => {
+						line.romanLyric = "";
+						line.words?.forEach((word) => {
+							word.romanWord = "";
+						});
+					});
+				}
+
+				if (data.lyricOffset !== undefined && data.lyricOffset !== 0) {
+					const lyricOffset = data.lyricOffset;
+					overrideLines = overrideLines.map((line) => ({
+						...line,
+						startTime: line.startTime - lyricOffset,
+						endTime: line.endTime - lyricOffset,
+						words: line.words.map((word) => ({
+							...word,
+							startTime: word.startTime - lyricOffset,
+							endTime: word.endTime - lyricOffset,
+						})),
+					}));
+				}
+
+				return {
+					state: "hasData",
+					data: overrideLines,
+				};
+			}
+		}
+
+		if (result.state === "hasData") {
+			let lines = result.data;
+			if (
+				overrideData.state === "hasData" &&
+				overrideData.data.lyricOffset !== undefined &&
+				overrideData.data.lyricOffset !== 0
 			) {
-				if (lyricOverrideTranslatedLyricData) {
-					const translated = parseLrc(lyricOverrideTranslatedLyricData);
-					for (const line of translated) {
-						pairLyric(line, overrideLines, "translatedLyric");
-					}
-				}
-				if (lyricOverrideRomanLyricData) {
-					const translated = parseLrc(lyricOverrideRomanLyricData);
-					for (const line of translated) {
-						pairLyric(line, overrideLines, "romanLyric");
-					}
-				}
-			}
-
-			switch (overrideData.data.lyricOverrideType) {
-				case LyricOverrideType.PureMusic:
-					overrideLines = [];
-					break;
-				case LyricOverrideType.LocalLRC:
-					if (overrideData.data.lyricOverrideOriginalLyricData) {
-						overrideLines = parseLrc(
-							overrideData.data.lyricOverrideOriginalLyricData,
-						).map(transformLyricLine);
-						checkTranslatedAndRomanLyric(
-							overrideData.data.lyricOverrideTranslatedLyricData,
-							overrideData.data.lyricOverrideRomanLyricData,
-						);
-					}
-					break;
-				case LyricOverrideType.LocalYRC:
-					if (overrideData.data.lyricOverrideOriginalLyricData) {
-						overrideLines = parseYrc(
-							overrideData.data.lyricOverrideOriginalLyricData,
-						).map(transformLyricLine);
-						checkTranslatedAndRomanLyric(
-							overrideData.data.lyricOverrideTranslatedLyricData,
-							overrideData.data.lyricOverrideRomanLyricData,
-						);
-					}
-					break;
-				case LyricOverrideType.LocalQRC:
-					if (overrideData.data.lyricOverrideOriginalLyricData) {
-						overrideLines = parseQrc(
-							overrideData.data.lyricOverrideOriginalLyricData,
-						).map(transformLyricLine);
-						checkTranslatedAndRomanLyric(
-							overrideData.data.lyricOverrideTranslatedLyricData,
-							overrideData.data.lyricOverrideRomanLyricData,
-						);
-					}
-					break;
-				case LyricOverrideType.LocalTTML:
-					if (overrideData.data.lyricOverrideOriginalLyricData)
-						// TODO: 提供歌词元数据
-						overrideLines = parseTTML(
-							overrideData.data.lyricOverrideOriginalLyricData,
-						).lyricLines;
-					break;
-				default:
-			}
-			if (overrideData.data.lyricOffset !== undefined) {
 				const lyricOffset = overrideData.data.lyricOffset;
-				overrideLines = overrideLines.map((line) => ({
+				lines = lines.map((line) => ({
 					...line,
 					startTime: line.startTime - lyricOffset,
 					endTime: line.endTime - lyricOffset,
@@ -479,7 +531,7 @@ export const lyricLinesAtom = atom(
 			}
 			return {
 				state: "hasData",
-				data: overrideLines,
+				data: lines,
 			};
 		}
 		return result;
@@ -570,10 +622,17 @@ export const LyricProvider: FC = () => {
 			},
 			(source, _index, result) => {
 				// log("已设置歌词为来自歌词源", source, "的", result);
-				setLyricSource({
-					state: "hasData",
-					data: source,
-				});
+				if (result.state === "hasData") {
+					setLyricSource({
+						state: "hasData",
+						data: source,
+					});
+				} else if (result.state === "hasError") {
+					setLyricSource({
+						state: "hasError",
+						error: result.error,
+					});
+				}
 				setLyricLines(result);
 			},
 			(source, _index, result) => {

@@ -1,6 +1,6 @@
 export function debounce<T extends Function>(callback: T, waitTime: number): T {
-	let timer = 0;
-	return function debounceClosure() {
+	let timer: any = 0;
+	return function debounceClosure(this: any) {
 		const self = this;
 		// biome-ignore lint/style/noArguments: 防抖函数
 		const args = arguments;

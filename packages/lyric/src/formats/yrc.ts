@@ -34,8 +34,8 @@ function trimBGParentheses(words: LyricWord[]): void {
  * @returns 成功解析出来的歌词
  */
 export function parseYrc(yrc: string): LyricLine[] {
-	const wordPattern = /^(.*?)\((\d+),(\d+),0\)/;
-	const linePattern = /^\[(\d+),(\d+)\]/;
+	const wordPattern = /^(.*?)\((\d+)\s*,\s*(\d+)(?:\s*,\s*(\d+))?\)/;
+	const linePattern = /^\[(\d+)\s*,\s*(\d+)\]/;
 
 	const lines = yrc
 		.split(/\r?\n/)
@@ -60,12 +60,12 @@ export function parseYrc(yrc: string): LyricLine[] {
 				const wordMatch = lineContent.match(wordPattern);
 				if (!wordMatch) break;
 				const [fullMatch, lastText, wordStartStr, wordDurStr] = wordMatch;
-				if (lastText && lastStart !== -1)
+				if (lastText)
 					words.push(
 						createWord({
 							word: lastText,
-							startTime: lastStart,
-							endTime: lastEnd,
+							startTime: lastStart !== -1 ? lastStart : lineStart,
+							endTime: lastEnd !== -1 ? lastEnd : Number(wordStartStr),
 						}),
 					);
 				const wordStart = Number(wordStartStr);
@@ -82,6 +82,16 @@ export function parseYrc(yrc: string): LyricLine[] {
 						endTime: lastEnd,
 					}),
 				);
+
+			if (words.length === 0 && lineContent) {
+				words.push(
+					createWord({
+						word: lineContent,
+						startTime: lineStart,
+						endTime: lineStart + lineDuration,
+					}),
+				);
+			}
 
 			const isBG = checkIsBG(words);
 			if (isBG) trimBGParentheses(words);

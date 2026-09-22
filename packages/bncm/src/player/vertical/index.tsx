@@ -107,7 +107,7 @@ export const LyricPlayerVertical: FC = () => {
 				}}
 			/>
 			<MusicInfo />
-			<CoreLyricPlayer isVertical albumCoverRef={albumCoverRef.current} />
+			<CoreLyricPlayer isVertical albumCoverRef={albumCoverRef} />
 		</div>
 	);
 };

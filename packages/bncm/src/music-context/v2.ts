@@ -300,7 +300,7 @@ export class MusicContextV2 extends MusicContextBase {
 					return source.includes('"track-playing"');
 				},
 				[],
-				window.ctl,
+				(window as any).ctl,
 				["window", "ctl"],
 			);
 		} else {

@@ -22,7 +22,7 @@ const $ = (n) => ({
 ), et = (n, t, e = "") => parseInt(n, 10) * 6e4 + parseInt(t, 10) * 1e3 + parseInt(`${e}000`.slice(0, 3), 10), rt = (n) => {
   const t = Math.floor(n / 6e4).toString().padStart(2, "0"), e = Math.floor(n % 6e4 / 1e3).toString().padStart(2, "0"), s = Math.floor(n % 1e3).toString().padStart(3, "0");
   return `${t}:${e}.${s}`;
-}, h = (n) => !Number.isFinite(n) || n < 0 ? 0 : n, N = (n) => !Number.isFinite(n) || n < 0 ? 0 : n, it = et(
+}, h = (n) => !Number.isFinite(n) || n < 0 ? 0 : n, D = (n) => !Number.isFinite(n) || n < 0 ? 0 : n, it = et(
   "999",
   "59",
   "999"
@@ -717,7 +717,7 @@ const U = new TextEncoder().encode("!@#)(*$%"), q = new TextEncoder().encode("12
   2,
   2,
   1
-], _t = [
+], kt = [
   56,
   48,
   40,
@@ -746,7 +746,7 @@ const U = new TextEncoder().encode("!@#)(*$%"), q = new TextEncoder().encode("12
   51,
   43,
   35
-], kt = [
+], _t = [
   62,
   54,
   46,
@@ -839,7 +839,7 @@ function Z(n, t) {
   return (s << BigInt(t) | s >> BigInt(28 - t)) & e;
 }
 function A(n, t) {
-  const e = new Int32Array(32), s = Q(n, _t), r = Q(n, kt);
+  const e = new Int32Array(32), s = Q(n, kt), r = Q(n, _t);
   let i = s << 4n, o = r << 4n;
   for (let c = 0; c < 16; c++) {
     const u = Mt[c];
@@ -920,7 +920,7 @@ const vt = [
   15,
   23,
   31
-], Dt = [
+], Nt = [
   37,
   5,
   45,
@@ -986,7 +986,7 @@ const vt = [
   60,
   28
 ], st = new Int32Array(2048), ot = new Int32Array(2048), z = new Int32Array(2048), j = new Int32Array(2048);
-function Nt() {
+function Dt() {
   const n = (t, e) => {
     let s = 0n;
     for (let r = 0; r < 64; r++) {
@@ -1002,11 +1002,11 @@ function Nt() {
     }
   for (let t = 0; t < 8; t++)
     for (let e = 0; e < 256; e++) {
-      const s = BigInt(e) << BigInt(56 - t * 8), r = n(s, Dt), i = t << 8 | e;
+      const s = BigInt(e) << BigInt(56 - t * 8), r = n(s, Nt), i = t << 8 | e;
       z[i] = Number(r >> 32n & 0xffffffffn), j[i] = Number(r & 0xffffffffn);
     }
 }
-Nt();
+Dt();
 function Gt(n) {
   return n & 32 | (n & 31) >> 1 | (n & 1) << 4;
 }
@@ -1027,7 +1027,7 @@ function Rt() {
     }
 }
 Rt();
-const k = new Int32Array(1024), v = new Int32Array(1024);
+const _ = new Int32Array(1024), v = new Int32Array(1024);
 function Wt() {
   for (let n = 0; n < 4; n++) {
     const t = (3 - n) * 8;
@@ -1043,13 +1043,13 @@ function Wt() {
         i >>> 32 - u & 1 && (r |= 1 << 47 - c);
       }
       const o = n << 8 | e;
-      k[o] = s, v[o] = r;
+      _[o] = s, v[o] = r;
     }
   }
 }
 Wt();
 function J(n, t, e) {
-  const s = n >>> 24 & 255, r = n >>> 16 & 255, i = n >>> 8 & 255, o = n & 255, c = k[s] | k[256 | r] | k[512 | i] | k[768 | o], u = v[s] | v[256 | r] | v[512 | i] | v[768 | o], a = c ^ t, f = u ^ e;
+  const s = n >>> 24 & 255, r = n >>> 16 & 255, i = n >>> 8 & 255, o = n & 255, c = _[s] | _[256 | r] | _[512 | i] | _[768 | o], u = v[s] | v[256 | r] | v[512 | i] | v[768 | o], a = c ^ t, f = u ^ e;
   return B[a >>> 18 & 63] | B[64 | a >>> 12 & 63] | B[128 | a >>> 6 & 63] | B[192 | a & 63] | B[256 | f >>> 18 & 63] | B[320 | f >>> 12 & 63] | B[384 | f >>> 6 & 63] | B[448 | f & 63];
 }
 function M(n, t, e) {
@@ -1155,15 +1155,15 @@ function Xt(n) {
 }
 function Ft(n) {
   var i, o;
-  const t = n.split(/\r?\n/).map((c) => c.trim()).filter((c) => c.length > 0), e = [], s = /^\[(\d+)\]/, r = /(.*?)\((\d+),(\d+)\)/g;
+  const t = n.split(/\r?\n/).map((c) => c.trim()).filter((c) => c.length > 0), e = [], s = /^\[(\d+)\]/, r = /(.*?)\((\d+)\s*,\s*(\d+)\)/g;
   for (const c of t) {
     const u = c.match(s);
     if (!u)
       continue;
     const [, a] = u, f = c.slice(u[0].length), l = [], d = Xt(Number(a));
     for (const p of f.matchAll(r)) {
-      const [, g, w, L] = p, y = Number(w), b = Number(L), _ = y + b, W = g;
-      l.push(x({ word: W, startTime: y, endTime: _ }));
+      const [, g, w, L] = p, y = Number(w), b = Number(L), k = y + b, W = g;
+      l.push(x({ word: W, startTime: y, endTime: k }));
     }
     const m = ((i = l[0]) == null ? void 0 : i.startTime) ?? 0, T = ((o = l[l.length - 1]) == null ? void 0 : o.endTime) ?? 0;
     l.length && (d.isBG === void 0 && (d.isBG = l.length > 0 && /^[(（]/.test(l[0].word) && /[）)]$/.test(l[l.length - 1].word)), d.isBG && l.length && (l[0].word = l[0].word.replace(/^[(（]/, ""), l[l.length - 1].word = l[l.length - 1].word.replace(
@@ -1192,7 +1192,7 @@ function qt(n) {
       i.word.trim() || !s.length ? s.push({
         word: i.word,
         startTime: h(i.startTime),
-        duration: N(
+        duration: D(
           h(i.endTime) - h(i.startTime)
         )
       }) : s[s.length - 1].word += i.word;
@@ -1273,11 +1273,11 @@ function Ht(n) {
     }))
   };
 }
-function D(n) {
+function N(n) {
   return n.map((t) => t.word).join("");
 }
 function Kt(n) {
-  return D(n.words).trim() !== "";
+  return N(n.words).trim() !== "";
 }
 function V(n, t) {
   return n.length === 0 ? !1 : n.length > 1 ? !0 : n[0].startTime !== t;
@@ -1398,15 +1398,15 @@ class sn {
   }
   processSingleLine(t, e, s, r) {
     const { auxiliaryLines: i } = this.options, { inlineAuxiliary: o } = this.features, c = o && i.translation.inline, u = o && !c && i.romanization.inline, a = o && !c && !u && i.backgroundVocal.inline, f = this.formatTimeTag(t.startTime, "square");
-    let l = i.translation.enabled ? t.translatedLyric : "", d = i.romanization.enabled ? t.romanLyric : "", m = i.backgroundVocal.enabled ? e : void 0, T = D(t.words);
+    let l = i.translation.enabled ? t.translatedLyric : "", d = i.romanization.enabled ? t.romanLyric : "", m = i.backgroundVocal.enabled ? e : void 0, T = N(t.words);
     if (o) {
       const g = (w) => {
         T += `${T ? " " : ""}(${w})`;
       };
-      c && l ? (g(l), l = "") : u && d ? (g(d), d = "") : a && m && (T += `${T ? " " : ""}(${D(m.words)})`, i.translation.enabled && m.translatedLyric && (l = l ? `${l} (${m.translatedLyric})` : `(${m.translatedLyric})`), i.romanization.enabled && m.romanLyric && (d = d ? `${d} (${m.romanLyric})` : `(${m.romanLyric})`), m = void 0);
+      c && l ? (g(l), l = "") : u && d ? (g(d), d = "") : a && m && (T += `${T ? " " : ""}(${N(m.words)})`, i.translation.enabled && m.translatedLyric && (l = l ? `${l} (${m.translatedLyric})` : `(${m.translatedLyric})`), i.romanization.enabled && m.romanLyric && (d = d ? `${d} (${m.romanLyric})` : `(${m.romanLyric})`), m = void 0);
     }
     r.push(this.renderBaseItem(t, T, t.isBG)), m && r.push(
-      this.renderBaseItem(m, D(m.words), !0)
+      this.renderBaseItem(m, N(m.words), !0)
     );
     const p = i.order === "translation-first" ? [l, d] : [d, l];
     for (const g of p)
@@ -1601,9 +1601,15 @@ const on = ["#", "//"], G = class G {
    * 组内其余行仍交给后续的推导逻辑决定结束时间
    */
   appendExplicitEndTime(t, e) {
-    const s = t.findLast(
-      (o) => o.type === "time"
-    ), r = e[e.length - 1];
+    let s;
+    for (let o = t.length - 1; o >= 0; o--) {
+      const c = t[o];
+      if (c.type === "time") {
+        s = c;
+        break;
+      }
+    }
+    const r = e[e.length - 1];
     if (!s || !r)
       return;
     const i = s.val;
@@ -1694,7 +1700,7 @@ const on = ["#", "//"], G = class G {
     for (const e of t)
       e.words.length <= 1 || (e.words = [
         x({
-          word: D(e.words),
+          word: N(e.words),
           startTime: e.startTime,
           endTime: e.endTime
         })
@@ -1793,8 +1799,8 @@ function Mn(n) {
   return [t, ...e].join(`
 `);
 }
-function _n(n) {
-  const t = /(.*?)\((\d+),(\d+)\)/g, e = /^\[(\d+),(\d+)\]/;
+function kn(n) {
+  const t = /(.*?)\((\d+)\s*,\s*(\d+)\)/g, e = /^\[(\d+)\s*,\s*(\d+)\]/;
   return n.split(/\r?\n/).map((r) => r.trim()).filter((r) => r.length > 0).map((r) => {
     const i = r.match(e);
     if (!i)
@@ -1824,9 +1830,9 @@ function _n(n) {
     });
   }).filter((r) => r !== null);
 }
-function kn(n) {
+function _n(n) {
   return n.map((t) => {
-    const e = h(t.startTime), s = h(t.endTime), r = N(s - e), i = [];
+    const e = h(t.startTime), s = h(t.endTime), r = D(s - e), i = [];
     for (const [
       o,
       { word: c, startTime: u, endTime: a }
@@ -1837,7 +1843,7 @@ function kn(n) {
       }
       let f = c;
       t.isBG && (o === 0 && (f = `（${f}`), o === t.words.length - 1 && (f += "）"));
-      const l = h(u), d = h(a), m = N(
+      const l = h(u), d = h(a), m = D(
         d - l
       );
       i.push(
@@ -1851,7 +1857,7 @@ function kn(n) {
 function vn(n) {
   return Tt(n);
 }
-function Dn(n) {
+function Nn(n) {
   return ht(n);
 }
 const an = /^[（(]/, ln = /[）)]$/;
@@ -1861,8 +1867,8 @@ function fn(n) {
 function un(n) {
   n[0].word = n[0].word.slice(1), n[n.length - 1].word = n[n.length - 1].word.slice(0, -1);
 }
-function Nn(n) {
-  const t = /^(.*?)\((\d+),(\d+),0\)/, e = /^\[(\d+),(\d+)\]/;
+function Dn(n) {
+  const t = /^(.*?)\((\d+)\s*,\s*(\d+)(?:\s*,\s*(\d+))?\)/, e = /^\[(\d+)\s*,\s*(\d+)\]/;
   return n.split(/\r?\n/).map((r) => r.trim()).filter((r) => r.length > 0).map((r) => {
     const i = r.match(e);
     if (!i)
@@ -1877,21 +1883,27 @@ function Nn(n) {
       if (!g)
         break;
       const [w, L, y, b] = g;
-      L && m !== -1 && l.push(
+      L && l.push(
         x({
           word: L,
-          startTime: m,
-          endTime: T
+          startTime: m !== -1 ? m : a,
+          endTime: T !== -1 ? T : Number(y)
         })
       );
-      const _ = Number(y), W = Number(b), lt = _ + W;
-      [m, T] = [_, lt], d = d.slice(w.length);
+      const k = Number(y), W = Number(b), lt = k + W;
+      [m, T] = [k, lt], d = d.slice(w.length);
     }
     m !== -1 && d && l.push(
       x({
         word: d,
         startTime: m,
         endTime: T
+      })
+    ), l.length === 0 && d && l.push(
+      x({
+        word: d,
+        startTime: a,
+        endTime: a + f
       })
     );
     const p = fn(l);
@@ -1908,7 +1920,7 @@ function dn(n) {
 }
 function Gn(n) {
   return n.map((t) => {
-    const e = h(t.startTime), s = h(t.endTime), r = N(s - e), i = [];
+    const e = h(t.startTime), s = h(t.endTime), r = D(s - e), i = [];
     for (const [
       o,
       { word: c, startTime: u, endTime: a }
@@ -1919,7 +1931,7 @@ function Gn(n) {
       }
       let f = dn(c);
       t.isBG && (o === 0 && (f = `（${f}`), o === t.words.length - 1 && (f += "）"));
-      const l = h(u), d = h(a), m = N(
+      const l = h(u), d = h(a), m = D(
         d - l
       );
       i.push(
@@ -1943,10 +1955,10 @@ export {
   P as parseLrcLike,
   An as parseLyl,
   Ft as parseLys,
-  _n as parseQrc,
+  kn as parseQrc,
   bn as parseSPL,
   vn as parseTTML,
-  Nn as parseYrc,
+  Dn as parseYrc,
   pn as stringifyAss,
   In as stringifyEslrc,
   wn as stringifyLqe,
@@ -1955,9 +1967,9 @@ export {
   R as stringifyLrcLike,
   Mn as stringifyLyl,
   qt as stringifyLys,
-  kn as stringifyQrc,
+  _n as stringifyQrc,
   $n as stringifySPL,
-  Dn as stringifyTTML,
+  Nn as stringifyTTML,
   Gn as stringifyYrc,
   Pn as stringifylrcA2
 };

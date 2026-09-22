@@ -5,7 +5,7 @@ export function focusAtom<Value, Result, Field extends keyof Awaited<Value>>(
 	anAtom: WritableAtom<Value, [Awaited<Value>], Result>,
 	key: Field,
 ) {
-	const getAtom = selectAtom(anAtom, (v) => v[key]);
+	const getAtom = selectAtom(anAtom, (v) => (v as any)[key]);
 	return atom(
 		(get) => get(getAtom),
 		async (get, set, value: Awaited<Value>[Field]) => {

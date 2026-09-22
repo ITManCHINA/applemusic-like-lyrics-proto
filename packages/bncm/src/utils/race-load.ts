@@ -41,11 +41,18 @@ export function raceLoad<Return, Value>(
 		abort.signal.addEventListener("abort", () => {
 			taskAbort.abort();
 		});
+		const taskState: ItemLoadableTaskState<Return> = {
+			task: null as any,
+			result: { state: "loading" },
+			abortController: taskAbort,
+		};
 		try {
 			const task = loader(item, { signal: taskAbort.signal });
+			taskState.task = task;
 			task
 				.then((result) => {
 					if (taskAbort.signal.aborted) return;
+					taskState.result = { state: "hasData", data: result };
 					if (index < loadedIndex) {
 						loadedIndex = index;
 						onSetLoadedItem(item, index, { state: "hasData", data: result });
@@ -55,6 +62,7 @@ export function raceLoad<Return, Value>(
 				})
 				.catch((error) => {
 					if (taskAbort.signal.aborted) return;
+					taskState.result = { state: "hasError", error };
 					onItemDone?.(item, index, { state: "hasError", error });
 				})
 				.finally(() => {
@@ -68,15 +76,13 @@ export function raceLoad<Return, Value>(
 						});
 					}
 				});
-			return { task, result: { state: "loading" }, abortController: taskAbort };
+			return taskState;
 		} catch (error) {
 			warn("raceLoad", item, error);
 			taskAbort.abort();
-			return {
-				task: Promise.reject(error),
-				result: { state: "hasError", error },
-				abortController: taskAbort,
-			};
+			taskState.task = Promise.reject(error);
+			taskState.result = { state: "hasError", error };
+			return taskState;
 		}
 	});
 

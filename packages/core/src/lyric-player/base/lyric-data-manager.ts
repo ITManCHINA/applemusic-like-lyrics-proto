@@ -1,7 +1,10 @@
 import structuredClone from "@ungap/structured-clone";
 import type { LyricLine, LyricWord, OptimizeLyricOptions } from "#interfaces";
 import { optimizeLyricLines } from "#utils/optimize-lyric.ts";
-import { assertValidLyricTimestamps } from "#utils/validate-lyric.ts";
+import {
+	assertValidLyricTimestamps,
+	sanitizeLyricLines,
+} from "#utils/validate-lyric.ts";
 import { MaskObsceneWordsMode } from "./consts.ts";
 
 /**
@@ -43,8 +46,9 @@ export class LyricDataManager {
 	private hasDuetLine = false;
 
 	public setOriginalLines(lines: LyricLine[]): void {
-		assertValidLyricTimestamps(lines);
-		this.rawLines = structuredClone(lines);
+		const sanitized = sanitizeLyricLines(lines);
+		assertValidLyricTimestamps(sanitized);
+		this.rawLines = structuredClone(sanitized);
 		this.isDirty = true;
 	}
 

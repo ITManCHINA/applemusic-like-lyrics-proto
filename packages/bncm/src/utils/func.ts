@@ -27,7 +27,7 @@ export function callCachedSearchFunction<F extends (...args: any[]) => any>(
 }
 
 // 遍历对象的键，包含原型链上的键
-function* getKeys(obj: any) {
+function* getKeys(obj: any): Generator<string> {
 	for (const key in obj) {
 		yield key;
 	}
