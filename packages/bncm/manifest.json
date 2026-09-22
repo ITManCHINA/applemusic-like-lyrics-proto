@@ -1,15 +1,15 @@
 {
     "manifest_version": 1,
-    "name": "类苹果歌词",
-    "slug": "Apple-Musiclike-lyrics",
-    "author": "SteveXMH",
+    "name": "AMLL bncm Next",
+    "slug": "AMLL-bncm-Next",
+    "author": "ITManCHINA",
     "author_links": [
-        "https://github.com/Steve-xmh",
-        "https://github.com/amll-dev/applemusic-like-lyrics-proto"
+        "https://github.com/ITManCHINA",
+        "https://github.com/ITManCHINA/applemusic-like-lyrics-proto"
     ],
     "description": "类 Apple Music 歌词页面插件|近乎完美的 Apple Music 歌词体验",
     "preview": "preview.svg",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "commit": "!SET_BY_BUILD_SCRIPT!",
     "branch": "!SET_BY_BUILD_SCRIPT!",
     "type": "extension",

@@ -195,7 +195,7 @@ const CopyBetterNCMPlugin = ({
 					zip.file(newName, createReadStream(resolve(fullDistDir, newName)));
 				}
 				await writeFile(
-					resolve(fullDistDir, "Apple Music-like lyrics.plugin"),
+					resolve(fullDistDir, `${name}.plugin`),
 					await zip.generateAsync({
 						type: "nodebuffer",
 						compression: "DEFLATE",
@@ -257,7 +257,7 @@ export default defineConfig(({ mode }) => {
 				include: ["./src/**/*.svg?react"],
 			}),
 			CopyBetterNCMPlugin({
-				name: "Apple-Musiclike-lyrics",
+				name: "AMLL-bncm-Next",
 				minify: env.AMLL_MINIFY === "true",
 				packPlugin: env.AMLL_PACK_PLUGIN === "true",
 			}),

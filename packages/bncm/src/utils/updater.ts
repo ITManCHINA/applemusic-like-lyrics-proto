@@ -6,7 +6,7 @@ import { atom } from "jotai";
 import { updateBranchAtom } from "../components/config/atoms";
 import manifest from "virtual:bncm-plugin-manifest";
 
-const GITHUB_OWNER = "amll-dev";
+const GITHUB_OWNER = "ITManCHINA";
 const GITHUB_REPO = "applemusic-like-lyrics-proto";
 const GITHUB_API_BASE = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
 const GITHUB_RAW_BASE = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}`;
