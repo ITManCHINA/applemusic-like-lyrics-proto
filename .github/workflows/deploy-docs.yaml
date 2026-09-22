@@ -15,12 +15,18 @@ jobs:
           version: latest
       - name: 安装 wasm32 目标
         run: rustup target add wasm32-unknown-unknown
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v3
+      - name: 配置 NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
       - name: 安装依赖并构建网站
         run: |
-          yarn
-          yarn workspace @applemusic-like-lyrics/docs build
+          pnpm install
+          pnpm --filter @applemusic-like-lyrics/docs build
         env:
-          YARN_ENABLE_IMMUTABLE_INSTALLS: false
           AMLL_GITHUB_IS_ACTION: true
       - name: 部署到 Github Pages
         uses: peaceiris/actions-gh-pages@v3

@@ -1,6 +1,5 @@
 {
   "name": "@applemusic-like-lyrics/core",
-  "packageManager": "yarn@3.6.1",
   "version": "0.1.0",
   "description": "AMLL 的纯 JS 核心组件框架，包括歌词显示组件和背景组件等其它可以复用的组件",
   "repository": {
@@ -31,8 +30,8 @@
     }
   },
   "devDependencies": {
-    "@applemusic-like-lyrics/lyric": "^0.0.2",
-    "@applemusic-like-lyrics/ttml": "workspace:^",
+    "@applemusic-like-lyrics/lyric": "workspace:*",
+    "@applemusic-like-lyrics/ttml": "workspace:*",
     "@biomejs/biome": "1.5.3",
     "@types/stats.js": "^0.17.0",
     "lil-gui": "^0.18.2",

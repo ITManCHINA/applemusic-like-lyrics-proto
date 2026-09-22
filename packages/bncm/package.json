@@ -1,6 +1,5 @@
 {
   "name": "@applemusic-like-lyrics/bncm",
-  "packageManager": "yarn@3.6.1",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -12,12 +11,12 @@
     "dev": "node ./scripts/dev.js"
   },
   "dependencies": {
-    "@applemusic-like-lyrics/core": "*",
-    "@applemusic-like-lyrics/fft": "*",
-    "@applemusic-like-lyrics/lyric": "*",
-    "@applemusic-like-lyrics/react": "*",
-    "@applemusic-like-lyrics/ttml": "*",
-    "@applemusic-like-lyrics/ws-protocol": "*",
+    "@applemusic-like-lyrics/core": "workspace:*",
+    "@applemusic-like-lyrics/fft": "workspace:*",
+    "@applemusic-like-lyrics/lyric": "workspace:*",
+    "@applemusic-like-lyrics/react": "workspace:*",
+    "@applemusic-like-lyrics/ttml": "workspace:*",
+    "@applemusic-like-lyrics/ws-protocol": "workspace:*",
     "@pixi/app": "^7.2.4",
     "@pixi/core": "^7.2.4",
     "@pixi/display": "^7.2.4",

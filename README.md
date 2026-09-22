@@ -89,12 +89,12 @@ GPU 性能在以下状况下能够以预期尺寸下满 60 帧运行：
 
 ## 开发/构建/打包流程
 
-安装好 `yarn`, `rustc`, `wasm-pack`，克隆本仓库到任意文件夹后在终端输入以下指令即可构建：
+安装好 `pnpm`, `rustc`, `wasm-pack`，克隆本仓库到任意文件夹后在终端输入以下指令即可构建：
 
 ```bash
-yarn
-yarn lerna run build:dev --scope "@applemusic-like-lyrics/*" # 开发构建
-yarn lerna run build --scope "@applemusic-like-lyrics/*" # 发行构建
+pnpm install
+pnpm lerna run build:dev --scope "@applemusic-like-lyrics/*" # 开发构建
+pnpm lerna run build --scope "@applemusic-like-lyrics/*" # 发行构建
 ```
 
 ## 鸣谢

@@ -1,6 +1,5 @@
 {
   "name": "@applemusic-like-lyrics/react",
-  "packageManager": "yarn@3.6.1",
   "version": "0.1.0",
   "description": "AMLL 组件库的 React 绑定",
   "repository": {
@@ -51,7 +50,7 @@
     "vite-plugin-dts": "^3.6.0"
   },
   "dependencies": {
-    "@applemusic-like-lyrics/core": "^0.0.15"
+    "@applemusic-like-lyrics/core": "workspace:*"
   },
   "peerDependencies": {
     "react": "*",

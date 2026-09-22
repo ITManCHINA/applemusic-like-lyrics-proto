@@ -10,7 +10,7 @@ AMLL 组件库的 React 绑定，你可以通过此库来更加方便地使用 A
 
 ```bash
 npm install @applemusic-like-lyrics/react # 使用 npm
-yarn add @applemusic-like-lyrics/react # 使用 yarn
+pnpm add @applemusic-like-lyrics/react # 使用 pnpm
 ```
 
 ## 使用方式摘要

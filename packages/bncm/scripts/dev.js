@@ -15,23 +15,23 @@ const tasks = [
 		cwd: resolve(__dirname, "../../ws-protocol"),
 	},
 	{
-		cmd: "yarn",
+		cmd: "pnpm",
 		args: ["build", "--watch"],
 		cwd: resolve(__dirname, "../../core"),
 	},
 	{
-		cmd: "yarn",
+		cmd: "pnpm",
 		args: ["build", "--watch"],
 		cwd: resolve(__dirname, "../../ttml"),
 	},
 	{
-		cmd: "yarn",
+		cmd: "pnpm",
 		args: ["build", "--watch"],
 		cwd: resolve(__dirname, "../../react"),
 	},
 	{
-		cmd: "yarn",
-		args: ["vite", "build", "--watch", "--mode", "dev"],
+		cmd: "pnpm",
+		args: ["exec", "vite", "build", "--watch", "--mode", "dev"],
 		cwd: resolve(__dirname, "../"),
 	},
 ].map((v) => {
