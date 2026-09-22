@@ -28,9 +28,13 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
+			"#interfaces": path.resolve(__dirname, "src/interfaces.ts"),
+			"#utils": path.resolve(__dirname, "src/utils"),
+			"#styles": path.resolve(__dirname, "src/styles"),
+			"#lyric": path.resolve(__dirname, "src/lyric-player"),
 			"@applemusic-like-lyrics/lyric": path.resolve(
 				__dirname,
-				"../lyric/pkg",
+				"../lyric/src",
 			),
 			"@applemusic-like-lyrics/ttml": path.resolve(
 				__dirname,

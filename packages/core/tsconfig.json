@@ -11,10 +11,18 @@
         "types": ["vite-plugin-glsl/ext"],
         "strict": true,
         "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "strictNullChecks": true,
         "allowSyntheticDefaultImports": true,
         "allowJs": false,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "noEmit": true,
+        "paths": {
+            "#interfaces": ["./src/interfaces.ts"],
+            "#utils/*": ["./src/utils/*"],
+            "#styles/*": ["./src/styles/*"],
+            "#lyric/*": ["./src/lyric-player/*"]
+        }
     }
 }

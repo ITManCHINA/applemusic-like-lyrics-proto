@@ -22,11 +22,21 @@
   "main": "./dist/amll-core.cjs",
   "module": "./dist/amll-core.js",
   "typings": "./dist/index.d.ts",
+  "imports": {
+    "#interfaces": "./src/interfaces.ts",
+    "#utils/*": "./src/utils/*",
+    "#styles/*": "./src/styles/*",
+    "#lyric/*": "./src/lyric-player/*"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/amll-core.js",
       "require": "./dist/amll-core.cjs"
+    },
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "devDependencies": {
@@ -34,6 +44,7 @@
     "@applemusic-like-lyrics/ttml": "workspace:*",
     "@biomejs/biome": "1.5.3",
     "@types/stats.js": "^0.17.0",
+    "@types/ungap__structured-clone": "^1.2.0",
     "lil-gui": "^0.18.2",
     "stats.js": "^0.17.0",
     "typedoc": "^0.25.2",
@@ -57,6 +68,7 @@
     "jss-preset-default": "*"
   },
   "dependencies": {
+    "@ungap/structured-clone": "^1.2.0",
     "bezier-easing": "^2.1.0"
   }
 }

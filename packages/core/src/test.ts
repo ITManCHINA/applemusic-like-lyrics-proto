@@ -265,7 +265,7 @@ declare global {
 window.globalLyricPlayer = lyricPlayer;
 
 const waitFrame = (): Promise<void> =>
-	new Promise((resolve) => requestAnimationFrame(resolve));
+	new Promise((resolve) => requestAnimationFrame(() => resolve()));
 const mapLyric = (
 	line: RawLyricLine,
 	i: number,

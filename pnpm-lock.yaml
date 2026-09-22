@@ -362,6 +362,9 @@ importers:
       '@pixi/sprite':
         specifier: '*'
         version: 7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))
+      '@ungap/structured-clone':
+        specifier: ^1.2.0
+        version: 1.4.0
       bezier-easing:
         specifier: ^2.1.0
         version: 2.1.0
@@ -384,6 +387,9 @@ importers:
       '@types/stats.js':
         specifier: ^0.17.0
         version: 0.17.4
+      '@types/ungap__structured-clone':
+        specifier: ^1.2.0
+        version: 1.2.0
       lil-gui:
         specifier: ^0.18.2
         version: 0.18.2
@@ -478,7 +484,33 @@ importers:
 
   packages/fft: {}
 
-  packages/lyric: {}
+  packages/lyric:
+    dependencies:
+      '@applemusic-like-lyrics/ttml':
+        specifier: workspace:*
+        version: link:../ttml
+      pako:
+        specifier: ^2.1.0
+        version: 2.2.0
+    devDependencies:
+      '@biomejs/biome':
+        specifier: 1.5.3
+        version: 1.5.3
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.43
+      '@types/pako':
+        specifier: ^2.0.3
+        version: 2.0.4
+      typescript:
+        specifier: ^5.2.2
+        version: 5.9.3
+      vite:
+        specifier: ^4.4.11
+        version: 4.5.14(@types/node@20.19.43)(lightningcss@1.33.0)(sass@1.104.1)(terser@5.51.2)
+      vite-plugin-dts:
+        specifier: ^3.6.0
+        version: 3.9.1(@types/node@20.19.43)(rollup@3.30.0)(supports-color@8.1.1)(typescript@5.9.3)(vite@4.5.14(@types/node@20.19.43)(lightningcss@1.33.0)(sass@1.104.1)(terser@5.51.2))
 
   packages/player:
     dependencies:
@@ -1863,6 +1895,9 @@ packages:
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
 
+  '@types/pako@2.0.4':
+    resolution: {integrity: sha512-VWDCbrLeVXJM9fihYodcLiIv0ku+AlOa/TQ1SvYOaBuyrSKgEcro95LJyIsJ4vSo6BXIxOKxiJAat04CmST9Fw==}
+
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
 
@@ -1892,6 +1927,9 @@ packages:
 
   '@types/stats.js@0.17.4':
     resolution: {integrity: sha512-jIBvWWShCvlBqBNIZt0KAshWpvSjhkwkEu4ZUcASoAvhmrgAUI2t1dXrjSL4xXVLB4FznPrIsX3nKXFl/Dt4vA==}
+
+  '@types/ungap__structured-clone@1.2.0':
+    resolution: {integrity: sha512-ZoaihZNLeZSxESbk9PUAPZOlSpcKx81I1+4emtULDVmBLkYutTcMlCj2K9VNlf9EWODxdO6gkAqEaLorXwZQVA==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -4239,6 +4277,9 @@ packages:
 
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
+
+  pako@2.2.0:
+    resolution: {integrity: sha512-zJq6RP/5q+TO2OpFV3FHzlPnFjmkb7Nc99a5SNjJE+uu/PkpChs+NIZSSzbBoD+6kjiISXjfYdwj1ZRQ81dz/w==}
 
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -6633,6 +6674,8 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/pako@2.0.4': {}
+
   '@types/prop-types@15.7.15': {}
 
   '@types/react-color@3.0.13(@types/react@18.3.31)':
@@ -6658,6 +6701,8 @@ snapshots:
   '@types/sortablejs@1.15.9': {}
 
   '@types/stats.js@0.17.4': {}
+
+  '@types/ungap__structured-clone@1.2.0': {}
 
   '@types/unist@2.0.11': {}
 
@@ -9814,6 +9859,8 @@ snapshots:
       - supports-color
 
   pako@1.0.11: {}
+
+  pako@2.2.0: {}
 
   parent-module@1.0.1:
     dependencies:

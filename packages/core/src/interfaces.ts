@@ -25,13 +25,22 @@ export interface Disposable {
 }
 
 /** 一个歌词单词 */
-export interface LyricWord {
+export interface LyricWordBase {
 	/** 单词的起始时间，单位为毫秒 */
 	startTime: number;
 	/** 单词的结束时间，单位为毫秒 */
 	endTime: number;
 	/** 单词内容 */
 	word: string;
+}
+
+export interface LyricWord extends LyricWordBase {
+	/** 单词的音译内容 */
+	romanWord?: string;
+	/** 单词内容是否包含冒犯性的不雅用语 */
+	obscene?: boolean;
+	/** 单词的注音内容 */
+	ruby?: LyricWordBase[];
 }
 
 /** 一行歌词，存储多个单词 */
@@ -53,4 +62,56 @@ export interface LyricLine {
 	isBG: boolean;
 	/** 该行是否为对唱歌词行（即歌词行靠右对齐） */
 	isDuet: boolean;
+}
+
+/**
+ * 优化歌词行的配置选项
+ */
+export interface OptimizeLyricOptions {
+	/**
+	 * 规范化歌词中的空格
+	 *
+	 * 将多个连续空格替换为一个空格
+	 * @default true
+	 */
+	normalizeSpaces?: boolean;
+	/**
+	 * 是否将行级时间戳强行设为字级时间戳
+	 * @default true
+	 */
+	resetLineTimestamps?: boolean;
+	/**
+	 * 该选项已不再生效，歌词优化时始终会把多行背景人声转换为
+	 * 单行背景人声 + 主歌词行的形式
+	 *
+	 * @deprecated 现有播放器架构已不再支持多个连续的背景人声行
+	 */
+	convertExcessiveBackgroundLines?: boolean;
+	/**
+	 * 是否同步主歌词与背景人声的时间
+	 * @default true
+	 */
+	syncMainAndBackgroundLines?: boolean;
+	/**
+	 * 清洗非刻意的重叠，以免不必要的多行高亮效果
+	 *
+	 * 重叠**达到** 500ms 时视为有意重叠并予以保留
+	 *
+	 * 重叠**不足** 500ms，且满足下列条件之一时视为无意重叠：
+	 * * 重叠不超过 100ms
+	 * * 重叠时长不超过下一行时长的 10%
+	 *
+	 * 并截断上一行歌词的结束时间为下一行歌词的开始时间
+	 * @default true
+	 */
+	cleanUnintentionalOverlaps?: boolean;
+	/**
+	 * 尝试让歌词提前最多 600ms 开始
+	 *
+	 * 与上一行存在重叠时尝试提前 400ms
+	 *
+	 * 若重叠时长不足 400ms，则提前重叠时长的 70%
+	 * @default true
+	 */
+	tryAdvanceStartTime?: boolean;
 }
