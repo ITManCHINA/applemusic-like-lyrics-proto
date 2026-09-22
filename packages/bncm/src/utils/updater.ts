@@ -6,21 +6,26 @@ import { atom } from "jotai";
 import { updateBranchAtom } from "../components/config/atoms";
 import manifest from "virtual:bncm-plugin-manifest";
 
-interface RepoTreeEntry {
-	id: string;
+const GITHUB_OWNER = "amll-dev";
+const GITHUB_REPO = "applemusic-like-lyrics-proto";
+const GITHUB_API_BASE = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
+const GITHUB_RAW_BASE = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}`;
+
+interface GitHubContentEntry {
 	name: string;
-	type: "blob" | "tree";
 	path: string;
-	mode: string;
+	sha: string;
+	size: number;
+	type: "file" | "dir";
+	download_url: string | null;
 }
 
-interface RepoBranch {
-	commit: {
-		id: string;
-		short_id: string;
-	};
+interface GitHubBranch {
 	name: string;
-	default: boolean;
+	commit: {
+		sha: string;
+		url?: string;
+	};
 }
 
 export interface InstallableBranch {
@@ -38,9 +43,12 @@ export async function getInstallableBranches(force = false) {
 		return cachedInstallableBranches;
 	}
 
-	const branches: RepoBranch[] = await fetch(
-		"https://gitcode.net/api/v4/projects/sn%2Fapplemusic-like-lyrics/repository/branches",
-		{ cache: "no-store" },
+	const branches: GitHubBranch[] = await fetch(
+		`${GITHUB_API_BASE}/branches`,
+		{
+			cache: "no-store",
+			headers: { Accept: "application/vnd.github.v3+json" },
+		},
 	).then((v) => v.json());
 
 	const result: InstallableBranch[] = [];
@@ -49,15 +57,20 @@ export async function getInstallableBranches(force = false) {
 			log(branch);
 			try {
 				const res = await fetch(
-					`https://gitcode.net/api/v4/projects/sn%2Fapplemusic-like-lyrics/repository/tree?path=packages%2Fbncm%2Fdist&ref=${encodeURIComponent(
+					`${GITHUB_API_BASE}/contents/packages/bncm/dist?ref=${encodeURIComponent(
 						branch.name,
 					)}`,
-					{ cache: "no-store" },
+					{
+						cache: "no-store",
+						headers: { Accept: "application/vnd.github.v3+json" },
+					},
 				);
 				let containsAllFiles = false;
 				let entries: string[] = [];
 				if (res.ok) {
-					entries = ((await res.json()) as RepoTreeEntry[]).map((v) => v.name);
+					entries = ((await res.json()) as GitHubContentEntry[]).map(
+						(v) => v.name,
+					);
 					if (entries.length > 0) {
 						containsAllFiles = [
 							"amll-bncm.js",
@@ -73,13 +86,16 @@ export async function getInstallableBranches(force = false) {
 					}
 				}
 				const oldRes = await fetch(
-					`https://gitcode.net/api/v4/projects/sn%2Fapplemusic-like-lyrics/repository/tree?path=dist&ref=${encodeURIComponent(
+					`${GITHUB_API_BASE}/contents/dist?ref=${encodeURIComponent(
 						branch.name,
 					)}`,
-					{ cache: "no-store" },
+					{
+						cache: "no-store",
+						headers: { Accept: "application/vnd.github.v3+json" },
+					},
 				);
 				if (oldRes.ok) {
-					entries = ((await oldRes.json()) as RepoTreeEntry[]).map(
+					entries = ((await oldRes.json()) as GitHubContentEntry[]).map(
 						(v) => v.name,
 					);
 					containsAllFiles = ["index.js", "manifest.json"].every((v) =>
@@ -108,19 +124,22 @@ export async function installLatestBranchVersion(
 	path: string,
 ) {
 	log("正在更新版本到", branchName, "分支的最新版本，位于远程路径", path);
-	const entries: RepoTreeEntry[] = await fetch(
-		`https://gitcode.net/api/v4/projects/sn%2Fapplemusic-like-lyrics/repository/tree?path=${encodeURIComponent(
-			path,
-		)}&ref=${encodeURIComponent(branchName)}`,
-		{ cache: "no-store" },
+	const entries: GitHubContentEntry[] = await fetch(
+		`${GITHUB_API_BASE}/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}?ref=${encodeURIComponent(
+			branchName,
+		)}`,
+		{
+			cache: "no-store",
+			headers: { Accept: "application/vnd.github.v3+json" },
+		},
 	).then((v) => v.json());
 
 	const files = await Promise.all(
 		entries.map(async (entry) => {
-			if (entry.type === "blob") {
-				const downloadLink = `https://gitcode.net/sn/applemusic-like-lyrics/-/raw/${encodeURIComponent(
-					branchName,
-				)}/${entry.path}?inline=false`;
+			if (entry.type === "file") {
+				const downloadLink =
+					entry.download_url ??
+					`${GITHUB_RAW_BASE}/${encodeURIComponent(branchName)}/${entry.path}`;
 				log("正在下载更新文件", entry.path);
 				const res = await fetch(downloadLink, {
 					cache: "no-store",
@@ -203,12 +222,7 @@ async function checkLatestVersion(
 
 	try {
 		const res = await fetch(
-			`https://gitcode.net/sn/applemusic-like-lyrics/-/raw/${encodeURIComponent(
-				branch,
-			)}/${path
-				.split("/")
-				.map((v) => encodeURIComponent(v))
-				.join("/")}/manifest.json?inline=false`,
+			`${GITHUB_RAW_BASE}/${encodeURIComponent(branch)}/${path}/manifest.json`,
 			{ cache: "no-store" },
 		);
 		if (res.ok) {

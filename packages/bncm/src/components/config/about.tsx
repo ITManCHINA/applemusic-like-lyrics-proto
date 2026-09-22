@@ -175,7 +175,7 @@ const AboutBNCMConfig: FC = () => {
 					<Button
 						onClick={() => {
 							betterncm.ncm.openUrl(
-								"https://github.com/Steve-xmh/applemusic-like-lyrics",
+								"https://github.com/amll-dev/applemusic-like-lyrics-proto",
 							);
 						}}
 					>
@@ -184,7 +184,7 @@ const AboutBNCMConfig: FC = () => {
 					<Button
 						onClick={() => {
 							betterncm.ncm.openUrl(
-								"https://github.com/Steve-xmh/applemusic-like-lyrics/issues/new",
+								"https://github.com/amll-dev/applemusic-like-lyrics-proto/issues/new",
 							);
 						}}
 					>
@@ -248,7 +248,7 @@ const AboutAMLLPlayerConfig: FC = () => {
 					<Button
 						onClick={() => {
 							betterncm.ncm.openUrl(
-								"https://github.com/Steve-xmh/applemusic-like-lyrics",
+								"https://github.com/amll-dev/applemusic-like-lyrics-proto",
 							);
 						}}
 					>
@@ -257,7 +257,7 @@ const AboutAMLLPlayerConfig: FC = () => {
 					<Button
 						onClick={() => {
 							betterncm.ncm.openUrl(
-								"https://github.com/Steve-xmh/applemusic-like-lyrics/issues/new",
+								"https://github.com/amll-dev/applemusic-like-lyrics-proto/issues/new",
 							);
 						}}
 					>
@@ -294,7 +294,7 @@ const AboutAMLLComponentConfig: FC = () => {
 					<Button
 						onClick={() => {
 							betterncm.ncm.openUrl(
-								"https://github.com/Steve-xmh/applemusic-like-lyrics",
+								"https://github.com/amll-dev/applemusic-like-lyrics-proto",
 							);
 						}}
 					>
@@ -303,7 +303,7 @@ const AboutAMLLComponentConfig: FC = () => {
 					<Button
 						onClick={() => {
 							betterncm.ncm.openUrl(
-								"https://github.com/Steve-xmh/applemusic-like-lyrics/issues/new",
+								"https://github.com/amll-dev/applemusic-like-lyrics-proto/issues/new",
 							);
 						}}
 					>

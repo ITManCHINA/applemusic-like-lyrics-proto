@@ -111,7 +111,7 @@ export const PlayerConfig: FC = () => {
 					<Button
 						onClick={() => {
 							betterncm.ncm.openUrl(
-								"https://github.com/Steve-xmh/applemusic-like-lyrics/actions/workflows/build-player.yaml",
+								"https://github.com/amll-dev/applemusic-like-lyrics-proto/actions/workflows/build-player.yaml",
 							);
 						}}
 						accent
